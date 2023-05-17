@@ -1,5 +1,5 @@
 # NudeNuke
 
 <p align="center">
-<img width=250px src=https://github.com/ixiLod/NudeNuke/assets/51421090/c0477e2a-b554-4e33-8db3-2a8ec677dce1">
+<img width=250px src="https://github.com/ixiLod/NudeNuke/assets/51421090/31ea7f5f-2bbf-4cde-8b7f-3248eff3b870">
 </p>
