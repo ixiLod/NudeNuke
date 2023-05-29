@@ -26,17 +26,11 @@ body {
 }
 
 .start-animation {
-  animation-name: start-border;
-  animation-duration: 9s;
-  animation-iteration-count: forwards;
-  animation-timing-function: ease-in;
+  animation: start-border 11s forwards ease-in;
 }
 
 .colored-border-window-active {
-  animation-name: border-animation;
-  animation-duration: 1.86s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  animation: border-animation 1.86s infinite ease-in-out;
 }
 
 .blur {
@@ -89,7 +83,7 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  animation: tutorial-opacity 10s forwards ease-out;
+  animation: tutorial-opacity 12s forwards ease-out;
 }
 
 .tuto-text {
