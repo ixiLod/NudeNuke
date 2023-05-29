@@ -1,5 +1,4 @@
 "use strict";
-// main.ts
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -40,8 +39,6 @@ const createWindow = () => {
         },
     });
     mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
 };
 electron_1.app.whenReady().then(() => {
     createWindow();
@@ -50,7 +47,6 @@ electron_1.app.whenReady().then(() => {
             createWindow();
     });
 });
-// Set escape shortcut
 const registerEscapeShortcut = () => {
     electron_1.globalShortcut.register('Escape', () => {
         electron_1.app.quit();
