@@ -1,0 +1,180 @@
+:root {
+  --border-color: #ff8cd4;
+  --border-blur-color: #21225a;
+}
+
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf');
+}
+
+body {
+  overflow: hidden;
+  -webkit-app-region: drag;
+}
+
+.colored-border-window {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: inset 0 0 25px var(--border-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.start-animation {
+  animation-name: start-border;
+  animation-duration: 9s;
+  animation-iteration-count: forwards;
+  animation-timing-function: ease-in;
+}
+
+.colored-border-window-active {
+  animation-name: border-animation;
+  animation-duration: 1.86s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.blur {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.active-style-blur {
+  background: url('assets/filter.jpg');
+  background-size: repeat;
+  background-position: center;
+  opacity: 0.986;
+  filter: contrast(0.2) brightness(0.1);
+  position: relative;
+}
+
+.blur::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+  background: inherit;
+  transform-origin: center;
+  animation: blur-animation 1s steps(4, end) infinite;
+}
+
+.border-blur {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.active-style-border-blur {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  position: absolute;
+  animation: border-blur-animation 3s infinite ease-in-out;
+}
+
+.tutorial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  animation: tutorial-opacity 10s forwards ease-out;
+}
+
+.tuto-text {
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  color: white;
+  text-shadow: 0 0 20px black;
+}
+
+@keyframes start-border {
+  0% {
+    box-shadow: inset 0 0 800px var(--border-color);
+  }
+  100% {
+    box-shadow: inset 0 0 25px var(--border-color);
+  }
+}
+
+@keyframes border-animation {
+  0% {
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 25px var(--border-color);
+  }
+  50% {
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 7px var(--border-color);
+  }
+  100% {
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 25px var(--border-color);
+  }
+}
+
+@keyframes blur-animation {
+  0% {
+    transform: translate(-50%, -50%) rotateX(180deg);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotateX(-90deg) rotateY(5deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotateX(180deg) rotateY(0deg);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotateX(90deg) rotateY(-5deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateX(-180deg);
+  }
+}
+
+@keyframes border-blur-animation {
+  0% {
+    border: 2px solid var(--border-blur-color);
+    box-shadow: inset 0 0 25px var(--border-blur-color);
+  }
+  25% {
+    border: 2px solid var(---border-blur-color);
+    box-shadow: inset 0 0 40px var(--border-blur-color);
+  }
+  50% {
+    border: 2px solid var(--border-blur-color);
+    box-shadow: inset 0 0 80px var(--border-blur-color);
+  }
+  75% {
+    border: 2px solid var(---border-blur-color);
+    box-shadow: inset 0 0 40px var(--border-blur-color);
+  }
+  100% {
+    border: 2px solid var(--border-blur-color);
+    box-shadow: inset 0 0 25px var(--border-blur-color);
+  }
+}
+
+@keyframes tutorial-opacity {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  90% {
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}

@@ -1,15 +1,20 @@
 {
+
   "name": "nudenuke",
-  "version": "1.0.0",
-  "description": "...",
-  "main": "index.ts",
+  "version": "0.0.1",
+  "description": "realtime anti-nude with tensorflow",
+  "main": "dist/main.js",
   "devDependencies": {
-    "typecript": "^0.0.1-security"
+    "@types/node": "^20.2.1",
+    "electron": "^24.3.1",
+    "typescript": "^5.0.4"
   },
   "scripts": {
+    "start": "npm run build && ./node_modules/.bin/electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build && electron-rebuild"
   },
   "author": "ixiLod",
-  "license": "ISC"
+  "license": "MIT"
 }
