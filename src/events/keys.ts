@@ -1,6 +1,7 @@
-const filter = document.querySelector('.blur');
-const borderBlur = document.querySelector('.border-blur');
-const borderWindow = document.querySelector('.colored-border-window');
+const filter = document.querySelector('.blur') as HTMLElement;
+const borderBlur = document.querySelector('.border-blur') as HTMLElement;
+const borderWindow = document.querySelector('.colored-border-window') as HTMLElement;
+const tutorial = document.querySelector('.tutorial') as HTMLElement;
 
 borderWindow.classList.add('start-animation');
 
@@ -17,14 +18,18 @@ const toggleBorder = () => {
   borderWindow.classList.toggle('colored-border-window-active');
 };
 
+const hideElement = (element: HTMLElement) => {
+  element.style.animation = 'none';
+  element.style.opacity = '0';
+  element.style.visibility = 'hidden';
+};
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'b') {
     toggleBlur();
-  }
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === ' ') {
+    hideElement(tutorial);
+  } else if (e.key === ' ') {
     toggleBorder();
+    hideElement(tutorial);
   }
 });

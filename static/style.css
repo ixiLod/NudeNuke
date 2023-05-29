@@ -26,7 +26,7 @@ body {
 }
 
 .start-animation {
-  animation: start-border 11s forwards ease-in;
+  animation: start-border 9s forwards ease-in;
 }
 
 .colored-border-window-active {
@@ -83,7 +83,7 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  animation: tutorial-opacity 12s forwards ease-out;
+  animation: tutorial-opacity 10s forwards ease-out;
 }
 
 .tuto-text {
