@@ -36,7 +36,6 @@ const registerEscapeShortcut = () => {
 
 const registerLockWindowShortcut = () => {
   globalShortcut.register('x', () => {
-    // Toggle alwaysOnTop
     if (mainWindow) {
       const isAlwaysOnTop = mainWindow.isAlwaysOnTop();
       mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
