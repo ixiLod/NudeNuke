@@ -90,7 +90,7 @@ body {
   font-family: 'Press Start 2P';
   font-size: 10px;
   color: white;
-  text-shadow: 0 0 20px black;
+  text-shadow: 0 0 5px black;
 }
 
 @keyframes start-border {

@@ -25,11 +25,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
+let mainWindow;
 const createWindow = () => {
-    const mainWindow = new electron_1.BrowserWindow({
-        alwaysOnTop: true,
-        width: 800,
-        height: 600,
+    mainWindow = new electron_1.BrowserWindow({
+        alwaysOnTop: false,
+        width: 900,
+        height: 700,
         transparent: true,
         frame: false,
         webPreferences: {
@@ -52,8 +53,18 @@ const registerEscapeShortcut = () => {
         electron_1.app.quit();
     });
 };
+const registerLockWindowShortcut = () => {
+    electron_1.globalShortcut.register('x', () => {
+        // Toggle alwaysOnTop
+        if (mainWindow) {
+            const isAlwaysOnTop = mainWindow.isAlwaysOnTop();
+            mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
+        }
+    });
+};
 electron_1.app.on('ready', () => {
     registerEscapeShortcut();
+    registerLockWindowShortcut();
 });
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin')

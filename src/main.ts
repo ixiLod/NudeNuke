@@ -1,11 +1,13 @@
 import { app, session, BrowserWindow, globalShortcut } from 'electron';
 import * as path from 'path';
 
+let mainWindow: BrowserWindow;
+
 const createWindow = (): void => {
-  const mainWindow = new BrowserWindow({
-    alwaysOnTop: true,
-    width: 800,
-    height: 600,
+  mainWindow = new BrowserWindow({
+    alwaysOnTop: false,
+    width: 900,
+    height: 700,
     transparent: true,
     frame: false,
     webPreferences: {
@@ -32,8 +34,19 @@ const registerEscapeShortcut = () => {
   });
 };
 
+const registerLockWindowShortcut = () => {
+  globalShortcut.register('x', () => {
+    // Toggle alwaysOnTop
+    if (mainWindow) {
+      const isAlwaysOnTop = mainWindow.isAlwaysOnTop();
+      mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
+    }
+  });
+};
+
 app.on('ready', () => {
   registerEscapeShortcut();
+  registerLockWindowShortcut();
 });
 
 app.on('window-all-closed', () => {
