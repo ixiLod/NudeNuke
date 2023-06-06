@@ -55,7 +55,6 @@ const registerEscapeShortcut = () => {
 };
 const registerLockWindowShortcut = () => {
     electron_1.globalShortcut.register('x', () => {
-        // Toggle alwaysOnTop
         if (mainWindow) {
             const isAlwaysOnTop = mainWindow.isAlwaysOnTop();
             mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
