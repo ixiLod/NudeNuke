@@ -33,6 +33,7 @@ const tf = __importStar(require("@tensorflow/tfjs-node"));
 const nsfw = __importStar(require("nsfwjs"));
 const screenshot_desktop_1 = __importDefault(require("screenshot-desktop"));
 const sharp_1 = __importDefault(require("sharp"));
+let pornCount = 0;
 let isRunning = false;
 let intervalId = null;
 let modelPromise;
@@ -57,7 +58,8 @@ async function checkNSFW(modelPromise) {
     imageTensor.dispose();
     const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
     const threshold = 0.81; // Adjustable value
-    return nsfwScore !== undefined && nsfwScore > threshold;
+    pornCount = predictions[0].className === 'Porn' ? pornCount + 1 : 0;
+    return (nsfwScore !== undefined && nsfwScore > threshold) || pornCount >= 3;
 }
 function startDetection(mainWindow) {
     modelPromise = loadModel();
