@@ -14,6 +14,6 @@
 
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/events/keys.ts"],
+  "include": ["src/**/*.ts", "src/events/events.js"],
   "exclude": ["node_modules"]
 }

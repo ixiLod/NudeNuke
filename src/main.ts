@@ -1,7 +1,12 @@
 import { app, session, BrowserWindow, globalShortcut } from 'electron';
 import * as path from 'path';
+import { startDetection } from './nsfwDetector';
 
-let mainWindow: BrowserWindow;
+export let mainWindow: BrowserWindow;
+export let currentWidth: number;
+export let currentHeight: number;
+export let currentX: number;
+export let currentY: number;
 
 const createWindow = (): void => {
   mainWindow = new BrowserWindow({
@@ -12,11 +17,38 @@ const createWindow = (): void => {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
+  currentWidth = mainWindow.getSize()[0];
+  currentHeight = mainWindow.getSize()[1];
+  currentX = mainWindow.getPosition()[0];
+  currentY = mainWindow.getPosition()[1];
+
+  mainWindow.on('resize', () => {
+    let size = mainWindow.getSize();
+    currentWidth = size[0];
+    currentHeight = size[1];
+  });
+
+  mainWindow.on('move', () => {
+    let position = mainWindow.getPosition();
+    currentX = position[0];
+    currentY = position[1];
+  });
+
+  mainWindow.on('blur', () => {
+    globalShortcut.unregisterAll();
+  });
+
+  mainWindow.on('focus', () => {
+    registerEscapeShortcut();
+    registerLockWindowShortcut();
+  });
+
+  startDetection(mainWindow);
   mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
 };
 
@@ -28,12 +60,6 @@ app.whenReady().then(() => {
   });
 });
 
-const registerEscapeShortcut = () => {
-  globalShortcut.register('Escape', () => {
-    app.quit();
-  });
-};
-
 const registerLockWindowShortcut = () => {
   globalShortcut.register('x', () => {
     if (mainWindow) {
@@ -43,15 +69,17 @@ const registerLockWindowShortcut = () => {
   });
 };
 
-app.on('ready', () => {
-  registerEscapeShortcut();
-  registerLockWindowShortcut();
-});
+const registerEscapeShortcut = () => {
+  globalShortcut.register('Escape', () => {
+    app.quit();
+  });
+};
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
 app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
   session.defaultSession.clearCache().catch((err) => console.log(err));
 });

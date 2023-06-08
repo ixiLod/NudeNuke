@@ -1,7 +1,7 @@
-const filter = document.querySelector('.blur') as HTMLElement;
-const borderBlur = document.querySelector('.border-blur') as HTMLElement;
-const borderWindow = document.querySelector('.colored-border-window') as HTMLElement;
-const tutorial = document.querySelector('.tutorial') as HTMLElement;
+const filter = document.querySelector('.blur');
+const borderBlur = document.querySelector('.border-blur');
+const borderWindow = document.querySelector('.colored-border-window');
+const tutorial = document.querySelector('.tutorial');
 
 borderWindow.classList.add('start-animation');
 
@@ -13,12 +13,14 @@ const toggleBlur = () => {
   filter.classList.toggle('active-style-blur');
   borderBlur.classList.toggle('active-style-border-blur');
 };
+window.electron.ipcRenderer.on('toggle-blur', toggleBlur);
 
 const toggleBorder = () => {
   borderWindow.classList.toggle('colored-border-window-active');
 };
+window.electron.ipcRenderer.on('toggle-border', toggleBorder);
 
-const hideElement = (element: HTMLElement) => {
+const hideElement = (element) => {
   element.style.animation = 'none';
   element.style.opacity = '0';
   element.style.visibility = 'hidden';

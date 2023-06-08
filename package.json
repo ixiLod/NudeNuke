@@ -8,11 +8,17 @@
     "typescript": "^5.1.3"
   },
   "scripts": {
-    "start": "npm run build && ./node_modules/.bin/electron .",
+    "start": "npm run build && electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "postinstall": "npm run build && electron-rebuild"
   },
   "author": "ixiLod",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.7.0",
+    "nsfwjs": "^2.4.2",
+    "screenshot-desktop": "^1.14.0",
+    "sharp": "^0.32.1"
+  }
 }

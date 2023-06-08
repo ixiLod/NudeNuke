@@ -23,11 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.currentY = exports.currentX = exports.currentHeight = exports.currentWidth = exports.mainWindow = void 0;
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
-let mainWindow;
+const nsfwDetector_1 = require("./nsfwDetector");
 const createWindow = () => {
-    mainWindow = new electron_1.BrowserWindow({
+    exports.mainWindow = new electron_1.BrowserWindow({
         alwaysOnTop: false,
         width: 900,
         height: 700,
@@ -35,11 +36,33 @@ const createWindow = () => {
         frame: false,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,
+            contextIsolation: true,
             preload: path.join(__dirname, 'preload.js'),
         },
     });
-    mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
+    exports.currentWidth = exports.mainWindow.getSize()[0];
+    exports.currentHeight = exports.mainWindow.getSize()[1];
+    exports.currentX = exports.mainWindow.getPosition()[0];
+    exports.currentY = exports.mainWindow.getPosition()[1];
+    exports.mainWindow.on('resize', () => {
+        let size = exports.mainWindow.getSize();
+        exports.currentWidth = size[0];
+        exports.currentHeight = size[1];
+    });
+    exports.mainWindow.on('move', () => {
+        let position = exports.mainWindow.getPosition();
+        exports.currentX = position[0];
+        exports.currentY = position[1];
+    });
+    exports.mainWindow.on('blur', () => {
+        electron_1.globalShortcut.unregisterAll();
+    });
+    exports.mainWindow.on('focus', () => {
+        registerEscapeShortcut();
+        registerLockWindowShortcut();
+    });
+    (0, nsfwDetector_1.startDetection)(exports.mainWindow);
+    exports.mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
 };
 electron_1.app.whenReady().then(() => {
     createWindow();
@@ -48,28 +71,25 @@ electron_1.app.whenReady().then(() => {
             createWindow();
     });
 });
+const registerLockWindowShortcut = () => {
+    electron_1.globalShortcut.register('x', () => {
+        if (exports.mainWindow) {
+            const isAlwaysOnTop = exports.mainWindow.isAlwaysOnTop();
+            exports.mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
+        }
+    });
+};
 const registerEscapeShortcut = () => {
     electron_1.globalShortcut.register('Escape', () => {
         electron_1.app.quit();
     });
 };
-const registerLockWindowShortcut = () => {
-    electron_1.globalShortcut.register('x', () => {
-        if (mainWindow) {
-            const isAlwaysOnTop = mainWindow.isAlwaysOnTop();
-            mainWindow.setAlwaysOnTop(!isAlwaysOnTop);
-        }
-    });
-};
-electron_1.app.on('ready', () => {
-    registerEscapeShortcut();
-    registerLockWindowShortcut();
-});
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin')
         electron_1.app.quit();
 });
 electron_1.app.on('will-quit', () => {
+    electron_1.globalShortcut.unregisterAll();
     electron_1.session.defaultSession.clearCache().catch((err) => console.log(err));
 });
 //# sourceMappingURL=main.js.map
