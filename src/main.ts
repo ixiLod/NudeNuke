@@ -79,7 +79,9 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-app.on('will-quit', () => {
+app.on('before-quit', () => {
   globalShortcut.unregisterAll();
-  session.defaultSession.clearCache().catch((err) => console.log(err));
+  session.defaultSession.clearCache().then(() => {
+    return session.defaultSession.clearStorageData();
+  }).catch((err) => console.log(err));
 });

@@ -141,7 +141,7 @@ body {
     box-shadow: inset 0 0 25px var(--border-blur-color);
   }
   25% {
-    border: 2px solid var(---border-blur-color);
+    border: 2px solid var(--border-blur-color);
     box-shadow: inset 0 0 40px var(--border-blur-color);
   }
   50% {
@@ -149,7 +149,7 @@ body {
     box-shadow: inset 0 0 80px var(--border-blur-color);
   }
   75% {
-    border: 2px solid var(---border-blur-color);
+    border: 2px solid var(--border-blur-color);
     box-shadow: inset 0 0 40px var(--border-blur-color);
   }
   100% {

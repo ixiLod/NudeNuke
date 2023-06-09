@@ -88,8 +88,10 @@ electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin')
         electron_1.app.quit();
 });
-electron_1.app.on('will-quit', () => {
+electron_1.app.on('before-quit', () => {
     electron_1.globalShortcut.unregisterAll();
-    electron_1.session.defaultSession.clearCache().catch((err) => console.log(err));
+    electron_1.session.defaultSession.clearCache().then(() => {
+        return electron_1.session.defaultSession.clearStorageData();
+    }).catch((err) => console.log(err));
 });
 //# sourceMappingURL=main.js.map
