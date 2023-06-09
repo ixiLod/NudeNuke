@@ -1,4 +1,4 @@
-import { globalShortcut } from 'electron';
+import { BrowserWindow, globalShortcut } from 'electron';
 import { currentWidth, currentHeight, currentX, currentY } from './main';
 import * as tf from '@tensorflow/tfjs-node';
 import * as nsfw from 'nsfwjs';
@@ -50,7 +50,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
   return (nsfwScore !== undefined && nsfwScore > threshold) || pornCount >= 3;
 }
 
-export function startDetection(mainWindow) {
+export function startDetection(mainWindow: BrowserWindow) {
   modelPromise = loadModel();
 
   mainWindow.on('focus', () => {
