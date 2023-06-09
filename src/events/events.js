@@ -17,8 +17,6 @@ const toggleBlur = () => {
 const autoBlur = () => {
   filter.classList.add('active-style-blur');
   borderBlur.classList.add('active-style-border-blur');
-
-  // enlever le blur au bout de 5 secondes
   setTimeout(() => {
     filter.classList.remove('active-style-blur');
     borderBlur.classList.remove('active-style-border-blur');
