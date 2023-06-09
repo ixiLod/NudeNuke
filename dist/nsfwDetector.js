@@ -57,7 +57,7 @@ async function checkNSFW(modelPromise) {
     const predictions = await model.classify(imageTensor);
     imageTensor.dispose();
     const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
-    const threshold = 0.81; // Adjustable value
+    const threshold = 0.75; // Adjustable value
     pornCount = predictions[0].className === 'Porn' ? pornCount + 1 : 0;
     return (nsfwScore !== undefined && nsfwScore > threshold) || pornCount >= 3;
 }
@@ -72,12 +72,12 @@ function startDetection(mainWindow) {
                     const isNSFW = await checkNSFW(modelPromise);
                     if (isNSFW) {
                         console.log('NSFW content detected!');
-                        mainWindow.webContents.send('toggle-blur');
+                        mainWindow.webContents.send('auto-blur');
                     }
                     else {
                         console.log('SFW content detected.');
                     }
-                }, 750);
+                }, 550);
             }
             else if (intervalId) {
                 clearInterval(intervalId);

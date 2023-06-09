@@ -13,7 +13,18 @@ const toggleBlur = () => {
   filter.classList.toggle('active-style-blur');
   borderBlur.classList.toggle('active-style-border-blur');
 };
-window.electron.ipcRenderer.on('toggle-blur', toggleBlur);
+
+const autoBlur = () => {
+  filter.classList.add('active-style-blur');
+  borderBlur.classList.add('active-style-border-blur');
+
+  // enlever le blur au bout de 5 secondes
+  setTimeout(() => {
+    filter.classList.remove('active-style-blur');
+    borderBlur.classList.remove('active-style-border-blur');
+  } , 10000);
+}
+window.electron.ipcRenderer.on('auto-blur', autoBlur);
 
 const toggleBorder = () => {
   borderWindow.classList.toggle('colored-border-window-active');
