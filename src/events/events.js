@@ -4,22 +4,27 @@ const borderWindow = document.querySelector('.colored-border-window');
 const startBorderWindow = document.querySelector('.start-border-window');
 const tutorial = document.querySelector('.tutorial');
 
+let autoBlurRunning = false;
+
 const animationTutorial = () => {
   startBorderWindow.classList.add('tutorial-border');
   tutorial.classList.add('tutorial-active');
 };
 
 const toggleBlur = () => {
+  if (autoBlurRunning) return;
   filter.classList.toggle('active-style-blur');
   borderBlur.classList.toggle('active-style-border-blur');
 };
 
 const autoBlur = () => {
+  autoBlurRunning = true;
   filter.classList.add('active-style-blur');
   borderBlur.classList.add('active-style-border-blur');
   setTimeout(() => {
     filter.classList.remove('active-style-blur');
     borderBlur.classList.remove('active-style-border-blur');
+    autoBlurRunning = false;
   }, 10000);
 };
 
