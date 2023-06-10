@@ -1,14 +1,18 @@
-const filter = document.querySelector('.blur');
-const borderBlur = document.querySelector('.border-blur');
-const borderWindow = document.querySelector('.colored-border-window');
 const startBorderWindow = document.querySelector('.start-border-window');
+const borderWindow = document.querySelector('.colored-border-window');
 const tutorial = document.querySelector('.tutorial');
+const borderBlur = document.querySelector('.border-blur');
+const filter = document.querySelector('.blur');
 
 let autoBlurRunning = false;
 
 const animationTutorial = () => {
   startBorderWindow.classList.add('tutorial-border');
   tutorial.classList.add('tutorial-active');
+};
+
+const toggleBorder = () => {
+  borderWindow.classList.toggle('colored-border-window-active');
 };
 
 const toggleBlur = () => {
@@ -26,10 +30,6 @@ const autoBlur = () => {
     borderBlur.classList.remove('active-style-border-blur');
     autoBlurRunning = false;
   }, 10000);
-};
-
-const toggleBorder = () => {
-  borderWindow.classList.toggle('colored-border-window-active');
 };
 
 const hideElement = (element) => {
