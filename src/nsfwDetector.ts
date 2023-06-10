@@ -10,7 +10,6 @@ type Prediction = {
   probability: number;
 };
 
-let pornCount = 0;
 let isRunning = false;
 let intervalId = null;
 let modelPromise: Promise<nsfw.NSFWJS>;
@@ -45,9 +44,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
   )?.probability;
   const threshold: number = 0.75; // Adjustable value
 
-  pornCount = predictions[0].className === 'Porn' ? pornCount + 1 : 0;
-
-  return (nsfwScore !== undefined && nsfwScore > threshold) || pornCount >= 3;
+  return (nsfwScore !== undefined && nsfwScore > threshold);
 }
 
 export function startDetection(mainWindow: BrowserWindow) {
