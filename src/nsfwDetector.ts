@@ -32,7 +32,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
       width: currentWidth - 25,
       height: currentHeight - 25,
     })
-    .resize(299, 299, { fit: 'contain' })
+    .resize(224, 224, { fit: 'contain' })
     .toBuffer();
 
   const imageTensor: any = tf.node.decodeImage(resizedBuffer) as tf.Tensor3D;

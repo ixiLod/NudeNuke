@@ -51,7 +51,7 @@ async function checkNSFW(modelPromise) {
         width: main_1.currentWidth - 25,
         height: main_1.currentHeight - 25,
     })
-        .resize(299, 299, { fit: 'contain' })
+        .resize(224, 224, { fit: 'contain' })
         .toBuffer();
     const imageTensor = tf.node.decodeImage(resizedBuffer);
     const predictions = await model.classify(imageTensor);

@@ -29,7 +29,7 @@ const autoBlur = () => {
     filter.classList.remove('active-style-blur');
     borderBlur.classList.remove('active-style-border-blur');
     autoBlurRunning = false;
-  }, 10000);
+  }, 9000);
 };
 
 const hideElement = (element) => {
@@ -49,5 +49,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.electron.ipcRenderer.on('animation-tutorial', animationTutorial);
-window.electron.ipcRenderer.on('auto-blur', autoBlur);
 window.electron.ipcRenderer.on('toggle-border', toggleBorder);
+window.electron.ipcRenderer.on('auto-blur', autoBlur);
