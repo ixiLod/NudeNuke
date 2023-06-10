@@ -13,6 +13,18 @@ body {
   -webkit-app-region: drag;
 }
 
+.start-border-window {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: inset 0 0 800px var(--border-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 .colored-border-window {
   border: 2px solid var(--border-color);
   border-radius: 10px;
@@ -25,12 +37,12 @@ body {
   box-sizing: border-box;
 }
 
-.start-animation {
-  animation: start-border 9s forwards ease-in;
-}
-
 .colored-border-window-active {
   animation: border-animation 1.86s infinite ease-in-out;
+}
+
+.tutorial-border {
+  animation: tutorial-border 1s forwards ease-in;
 }
 
 .blur {
@@ -83,7 +95,10 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  animation: tutorial-opacity 10s forwards ease-out;
+}
+
+.tutorial-active {
+  animation: tutorial-opacity 0.1s forwards ease-out;
 }
 
 .tuto-text {
@@ -93,12 +108,30 @@ body {
   text-shadow: 0 0 5px black;
 }
 
-@keyframes start-border {
+.resize {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+@keyframes tutorial-border {
   0% {
-    box-shadow: inset 0 0 800px var(--border-color);
+    box-shadow: inset 0 0 200px var(--border-color);
   }
   100% {
-    box-shadow: inset 0 0 25px var(--border-color);
+    box-shadow: inset 0 0 0px var(--border-color);
+  }
+}
+
+@keyframes tutorial-opacity {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
@@ -109,7 +142,7 @@ body {
   }
   50% {
     border: 2px solid var(--border-color);
-    box-shadow: inset 0 0 7px var(--border-color);
+    box-shadow: inset 0 0 10px var(--border-color);
   }
   100% {
     border: 2px solid var(--border-color);
@@ -155,20 +188,5 @@ body {
   100% {
     border: 2px solid var(--border-blur-color);
     box-shadow: inset 0 0 25px var(--border-blur-color);
-  }
-}
-
-@keyframes tutorial-opacity {
-  0% {
-    opacity: 1;
-    visibility: visible;
-  }
-  90% {
-    visibility: visible;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
   }
 }

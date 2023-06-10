@@ -1,13 +1,13 @@
 const filter = document.querySelector('.blur');
 const borderBlur = document.querySelector('.border-blur');
 const borderWindow = document.querySelector('.colored-border-window');
+const startBorderWindow = document.querySelector('.start-border-window');
 const tutorial = document.querySelector('.tutorial');
 
-borderWindow.classList.add('start-animation');
-
-borderWindow.addEventListener('animationend', () => {
-  borderWindow.classList.remove('start-animation');
-});
+const animationTutorial = () => {
+  startBorderWindow.classList.add('tutorial-border');
+  tutorial.classList.add('tutorial-active');
+};
 
 const toggleBlur = () => {
   filter.classList.toggle('active-style-blur');
@@ -20,14 +20,12 @@ const autoBlur = () => {
   setTimeout(() => {
     filter.classList.remove('active-style-blur');
     borderBlur.classList.remove('active-style-border-blur');
-  } , 10000);
-}
-window.electron.ipcRenderer.on('auto-blur', autoBlur);
+  }, 10000);
+};
 
 const toggleBorder = () => {
   borderWindow.classList.toggle('colored-border-window-active');
 };
-window.electron.ipcRenderer.on('toggle-border', toggleBorder);
 
 const hideElement = (element) => {
   element.style.animation = 'none';
@@ -44,3 +42,7 @@ document.addEventListener('keydown', (e) => {
     hideElement(tutorial);
   }
 });
+
+window.electron.ipcRenderer.on('animation-tutorial', animationTutorial);
+window.electron.ipcRenderer.on('auto-blur', autoBlur);
+window.electron.ipcRenderer.on('toggle-border', toggleBorder);

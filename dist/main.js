@@ -48,6 +48,7 @@ const createWindow = () => {
         let size = exports.mainWindow.getSize();
         exports.currentWidth = size[0];
         exports.currentHeight = size[1];
+        exports.mainWindow.webContents.send('animation-tutorial');
     });
     exports.mainWindow.on('move', () => {
         let position = exports.mainWindow.getPosition();
