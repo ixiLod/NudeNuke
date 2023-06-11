@@ -44,7 +44,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
   )?.probability;
   const threshold: number = 0.75; // Adjustable value
 
-  return nsfwScore !== undefined && nsfwScore > threshold;
+  return nsfwScore !== undefined && nsfwScore >= threshold;
 }
 
 export function startDetection(mainWindow: BrowserWindow) {

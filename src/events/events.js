@@ -22,13 +22,16 @@ const toggleBlur = () => {
 };
 
 const autoBlur = () => {
+  if (autoBlurRunning) return;
   autoBlurRunning = true;
   filter.classList.add('active-style-blur');
   borderBlur.classList.add('active-style-border-blur');
   setTimeout(() => {
-    filter.classList.remove('active-style-blur');
-    borderBlur.classList.remove('active-style-border-blur');
-    autoBlurRunning = false;
+    if (autoBlurRunning) {
+      filter.classList.remove('active-style-blur');
+      borderBlur.classList.remove('active-style-border-blur');
+      autoBlurRunning = false;
+    }
   }, 9000);
 };
 
