@@ -6,7 +6,9 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        name: 'NudeNuke',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
