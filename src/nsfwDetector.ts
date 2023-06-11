@@ -34,7 +34,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
     .resize(224, 224, { fit: 'contain' })
     .toBuffer();
 
-  const imageTensor: any = tf.node.decodeImage(resizedBuffer) as tf.Tensor3D;
+  const imageTensor: any = tf.node.decodeImage(resizedBuffer);
 
   const predictions: Prediction[] = await model.classify(imageTensor);
   imageTensor.dispose();
@@ -44,7 +44,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
   )?.probability;
   const threshold: number = 0.75; // Adjustable value
 
-  return (nsfwScore !== undefined && nsfwScore > threshold);
+  return nsfwScore !== undefined && nsfwScore > threshold;
 }
 
 export function startDetection(mainWindow: BrowserWindow) {

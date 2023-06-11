@@ -57,7 +57,7 @@ async function checkNSFW(modelPromise) {
     imageTensor.dispose();
     const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
     const threshold = 0.75; // Adjustable value
-    return (nsfwScore !== undefined && nsfwScore > threshold);
+    return nsfwScore !== undefined && nsfwScore > threshold;
 }
 function startDetection(mainWindow) {
     modelPromise = loadModel();
