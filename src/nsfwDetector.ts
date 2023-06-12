@@ -42,7 +42,7 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
   const nsfwScore: number | undefined = predictions.find(
     (prediction) => prediction.className === 'Porn'
   )?.probability;
-  const threshold: number = 0.75; // Adjustable value
+  const threshold: number = 0.67; // Adjustable value
 
   return nsfwScore !== undefined && nsfwScore >= threshold;
 }
