@@ -1,8 +1,13 @@
 # NudeNuke
 
+<br>
+
+
 <p align="center">
 <img width=250px src="https://github.com/ixiLod/NudeNuke/assets/51421090/661e1fcd-4ee9-4e9e-9a9e-817397eba22e"> 
 </p>
+
+<br>
 
 <p align="center">
   it is a slick and intuitive application which is intended for the creator of live content, such as streamers
@@ -11,6 +16,8 @@
 <p align="center">
   <img src="static/assets/tutogifanim.gif" alt="tutoGif">
 </p>
+
+<br>
 
 ## How to use 
 
@@ -22,6 +29,8 @@ This application use keyboard, there are 4 options keys :
 - **B** : *to activate/desactivate filter manually.* 
 - **Space** : *to activate/desactivate automatic filter.* 
 
+<br>
+
 ## How it work
 
 - 1-Screenshot-desktop take a full screenshot to your primary screen.
@@ -32,10 +41,14 @@ This application use keyboard, there are 4 options keys :
 
 No images are stored on your system, they are stored in RAM and deleted each time the script repeats its action, that is every 0.5 seconds
 
+<br>
+
 ## Installation
 
-*For mac* : Just download the latest release, unzip, and put the app in your applications folder
+*For mac* : Just download the latest release, unzip, and put the app in your applications folder.<br>
 ( You need to desactivate GateKeeper for use at this time, because this application is not licensed )
+
+<br>
 
 ## Dependencies
 
