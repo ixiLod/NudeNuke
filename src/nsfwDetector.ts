@@ -1,5 +1,5 @@
 import { BrowserWindow, globalShortcut } from 'electron';
-import { currentWidth, currentHeight, currentX, currentY } from './main';
+import { windowWidth, windowHeight, windowX, windowY, viewX, viewY, viewWidth, viewHeight } from './main';
 import * as tf from '@tensorflow/tfjs-node';
 import * as nsfw from 'nsfwjs';
 import screenshot from 'screenshot-desktop';
@@ -26,10 +26,10 @@ async function checkNSFW(modelPromise: Promise<nsfw.NSFWJS>): Promise<boolean> {
 
   const resizedBuffer = await sharp(screenshotBuffer)
     .extract({
-      left: currentX,
-      top: currentY,
-      width: currentWidth - 25,
-      height: currentHeight - 25,
+      left: viewX,
+      top: viewY,
+      width: viewWidth,
+      height: viewHeight,
     })
     .resize(224, 224, { fit: 'contain' })
     .toBuffer();
