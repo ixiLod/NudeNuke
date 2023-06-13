@@ -23,37 +23,32 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.currentY = exports.currentX = exports.currentHeight = exports.currentWidth = exports.mainWindow = void 0;
+exports.viewHeight = exports.viewWidth = exports.viewY = exports.viewX = exports.windowHeight = exports.windowWidth = exports.windowY = exports.windowX = exports.screenHeight = exports.screenWidth = exports.mainWindow = void 0;
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
 const nsfwDetector_1 = require("./nsfwDetector");
 const createWindow = () => {
+    const { screen } = require('electron');
     exports.mainWindow = new electron_1.BrowserWindow({
         alwaysOnTop: false,
         width: 900,
         height: 700,
         transparent: true,
         frame: false,
+        icon: path.join(__dirname, '../static/icons/icon.icns'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
             preload: path.join(__dirname, 'preload.js'),
         },
     });
-    exports.currentWidth = exports.mainWindow.getSize()[0];
-    exports.currentHeight = exports.mainWindow.getSize()[1];
-    exports.currentX = exports.mainWindow.getPosition()[0];
-    exports.currentY = exports.mainWindow.getPosition()[1];
     exports.mainWindow.on('resize', () => {
-        let size = exports.mainWindow.getSize();
-        exports.currentWidth = size[0];
-        exports.currentHeight = size[1];
+        calcDimensions(screen);
         exports.mainWindow.webContents.send('animation-tutorial');
     });
     exports.mainWindow.on('move', () => {
-        let position = exports.mainWindow.getPosition();
-        exports.currentX = position[0];
-        exports.currentY = position[1];
+        calcDimensions(screen);
+        isOutScreen();
     });
     exports.mainWindow.on('blur', () => {
         electron_1.globalShortcut.unregisterAll();
@@ -64,6 +59,7 @@ const createWindow = () => {
     });
     (0, nsfwDetector_1.startDetection)(exports.mainWindow);
     exports.mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
+    calcDimensions(screen);
 };
 electron_1.app.whenReady().then(() => {
     createWindow();
@@ -72,6 +68,31 @@ electron_1.app.whenReady().then(() => {
             createWindow();
     });
 });
+const calcDimensions = (screen) => {
+    let screenBounds = screen.getPrimaryDisplay().bounds;
+    exports.screenWidth = screenBounds.width;
+    exports.screenHeight = screenBounds.height;
+    let winPos = exports.mainWindow.getPosition();
+    exports.windowX = winPos[0] + 25;
+    exports.windowY = winPos[1] + 25;
+    let winSize = exports.mainWindow.getSize();
+    exports.windowWidth = winSize[0] - 25;
+    exports.windowHeight = winSize[1] - 25;
+    // Window dimensions in screen bounds
+    exports.viewX = Math.max(0, exports.windowX);
+    exports.viewY = Math.max(0, exports.windowY);
+    exports.viewWidth = Math.min(exports.windowX + exports.windowWidth, exports.screenWidth) - exports.viewX;
+    exports.viewHeight = Math.min(exports.windowY + exports.windowHeight, exports.screenHeight) - exports.viewY;
+};
+const isOutScreen = () => {
+    const outScreen = exports.windowX <= 0 || exports.windowX >= exports.screenWidth || exports.windowY <= 0 || exports.windowY >= exports.screenHeight;
+    if (outScreen) {
+        exports.mainWindow.webContents.send('out-screen');
+    }
+    else {
+        exports.mainWindow.webContents.send('in-screen');
+    }
+};
 const registerLockWindowShortcut = () => {
     electron_1.globalShortcut.register('x', () => {
         if (exports.mainWindow) {
@@ -91,8 +112,11 @@ electron_1.app.on('window-all-closed', () => {
 });
 electron_1.app.on('before-quit', () => {
     electron_1.globalShortcut.unregisterAll();
-    electron_1.session.defaultSession.clearCache().then(() => {
+    electron_1.session.defaultSession
+        .clearCache()
+        .then(() => {
         return electron_1.session.defaultSession.clearStorageData();
-    }).catch((err) => console.log(err));
+    })
+        .catch((err) => console.log(err));
 });
 //# sourceMappingURL=main.js.map

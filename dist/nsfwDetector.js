@@ -45,10 +45,10 @@ async function checkNSFW(modelPromise) {
     const screenshotBuffer = await (0, screenshot_desktop_1.default)();
     const resizedBuffer = await (0, sharp_1.default)(screenshotBuffer)
         .extract({
-        left: main_1.currentX,
-        top: main_1.currentY,
-        width: main_1.currentWidth - 25,
-        height: main_1.currentHeight - 25,
+        left: main_1.viewX,
+        top: main_1.viewY,
+        width: main_1.viewWidth,
+        height: main_1.viewHeight,
     })
         .resize(224, 224, { fit: 'contain' })
         .toBuffer();
@@ -56,8 +56,8 @@ async function checkNSFW(modelPromise) {
     const predictions = await model.classify(imageTensor);
     imageTensor.dispose();
     const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
-    const threshold = 0.75; // Adjustable value
-    return nsfwScore !== undefined && nsfwScore > threshold;
+    const threshold = 0.67; // Adjustable value
+    return nsfwScore !== undefined && nsfwScore >= threshold;
 }
 function startDetection(mainWindow) {
     modelPromise = loadModel();

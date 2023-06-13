@@ -36,10 +36,12 @@ const createWindow = (): void => {
 
   mainWindow.on('resize', () => {
     calcDimensions(screen);
+    mainWindow.webContents.send('animation-tutorial');
   });
 
   mainWindow.on('move', () => {
     calcDimensions(screen);
+    isOutScreen();
   });
 
   mainWindow.on('blur', () => {
@@ -65,7 +67,6 @@ app.whenReady().then(() => {
 });
 
 const calcDimensions = (screen: Screen) => {
-
   let screenBounds = screen.getPrimaryDisplay().bounds;
   screenWidth = screenBounds.width;
   screenHeight = screenBounds.height;
@@ -77,14 +78,23 @@ const calcDimensions = (screen: Screen) => {
   let winSize = mainWindow.getSize();
   windowWidth = winSize[0] - 25;
   windowHeight = winSize[1] - 25;
-  mainWindow.webContents.send('animation-tutorial');
 
   // Window dimensions in screen bounds
   viewX = Math.max(0, windowX);
   viewY = Math.max(0, windowY);
-  viewWidth = Math.min( windowX + windowWidth, screenWidth ) - viewX;
-  viewHeight = Math.min( windowY + windowHeight, screenHeight ) - viewY;
-}
+  viewWidth = Math.min(windowX + windowWidth, screenWidth) - viewX;
+  viewHeight = Math.min(windowY + windowHeight, screenHeight) - viewY;
+};
+
+const isOutScreen = () => {
+  const outScreen =
+    windowX <= 0 || windowX >= screenWidth || windowY <= 0 || windowY >= screenHeight;
+  if (outScreen) {
+    mainWindow.webContents.send('out-screen');
+  } else {
+    mainWindow.webContents.send('in-screen');
+  }
+};
 
 const registerLockWindowShortcut = () => {
   globalShortcut.register('x', () => {
@@ -107,7 +117,10 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', () => {
   globalShortcut.unregisterAll();
-  session.defaultSession.clearCache().then(() => {
-    return session.defaultSession.clearStorageData();
-  }).catch((err) => console.log(err));
+  session.defaultSession
+    .clearCache()
+    .then(() => {
+      return session.defaultSession.clearStorageData();
+    })
+    .catch((err) => console.log(err));
 });

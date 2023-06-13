@@ -1,11 +1,19 @@
 :root {
   --border-color: #ff8cd4;
   --border-blur-color: #21225a;
+  --text-color: white;
+  --text-shadow: black;
+  --warning-color: crimson;
 }
 
 @font-face {
   font-family: 'Press Start 2P';
   src: url('./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('./assets/fonts/GeneralSans/Fonts/Variable/GeneralSans-Variable.ttf');
 }
 
 body {
@@ -104,8 +112,8 @@ body {
 .tuto-text {
   font-family: 'Press Start 2P';
   font-size: 10px;
-  color: white;
-  text-shadow: 0 0 5px black;
+  color: var(--text-color);
+  text-shadow: 0 0 5px var(--text-shadow);
 }
 
 .resize {
@@ -113,6 +121,51 @@ body {
   bottom: 0;
   right: 10px;
   opacity: 0.86;
+}
+
+.message-out-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.out-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  bottom: 0;
+}
+
+.out-screen::before {
+  content: '❌ The window is outside the main screen ❌';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'GeneralSans';
+  font-size: 1.1rem;
+  color: var(--warning-color);
+  text-shadow: 0 0 5px var(--text-shadow);
+}
+
+.out-screen::after {
+  content: '❌ The window is outside the main screen ❌';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'GeneralSans';
+  font-size: 1.1rem;
+  color: var(--warning-color);
+  text-shadow: 0 0 5px var(--text-shadow);
+}
+
+.warning-border {
+  border: 2px solid var(--warning-color);
+  box-shadow: inset 0 0 25px var(--warning-color);
 }
 
 @keyframes tutorial-border {

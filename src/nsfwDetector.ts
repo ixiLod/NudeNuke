@@ -1,5 +1,5 @@
 import { BrowserWindow, globalShortcut } from 'electron';
-import { windowWidth, windowHeight, windowX, windowY, viewX, viewY, viewWidth, viewHeight } from './main';
+import { viewX, viewY, viewWidth, viewHeight } from './main';
 import * as tf from '@tensorflow/tfjs-node';
 import * as nsfw from 'nsfwjs';
 import screenshot from 'screenshot-desktop';
