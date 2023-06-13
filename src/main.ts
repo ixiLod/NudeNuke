@@ -1,14 +1,25 @@
-import { app, session, BrowserWindow, globalShortcut } from 'electron';
+import { app, session, BrowserWindow, globalShortcut, Screen } from 'electron';
 import * as path from 'path';
 import { startDetection } from './nsfwDetector';
 
 export let mainWindow: BrowserWindow;
-export let currentWidth: number;
-export let currentHeight: number;
-export let currentX: number;
-export let currentY: number;
+
+export let screenWidth: number;
+export let screenHeight: number;
+
+export let windowX: number;
+export let windowY: number;
+export let windowWidth: number;
+export let windowHeight: number;
+
+export let viewX: number;
+export let viewY: number;
+export let viewWidth: number;
+export let viewHeight: number;
 
 const createWindow = (): void => {
+  const { screen } = require('electron');
+
   mainWindow = new BrowserWindow({
     alwaysOnTop: false,
     width: 900,
@@ -23,22 +34,12 @@ const createWindow = (): void => {
     },
   });
 
-  currentWidth = mainWindow.getSize()[0];
-  currentHeight = mainWindow.getSize()[1];
-  currentX = mainWindow.getPosition()[0];
-  currentY = mainWindow.getPosition()[1];
-
   mainWindow.on('resize', () => {
-    let size = mainWindow.getSize();
-    currentWidth = size[0];
-    currentHeight = size[1];
-    mainWindow.webContents.send('animation-tutorial');
+    calcDimensions(screen);
   });
 
   mainWindow.on('move', () => {
-    let position = mainWindow.getPosition();
-    currentX = position[0];
-    currentY = position[1];
+    calcDimensions(screen);
   });
 
   mainWindow.on('blur', () => {
@@ -52,6 +53,7 @@ const createWindow = (): void => {
 
   startDetection(mainWindow);
   mainWindow.loadFile(path.join(__dirname, '../static/index.html'));
+  calcDimensions(screen);
 };
 
 app.whenReady().then(() => {
@@ -61,6 +63,28 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
+
+const calcDimensions = (screen: Screen) => {
+
+  let screenBounds = screen.getPrimaryDisplay().bounds;
+  screenWidth = screenBounds.width;
+  screenHeight = screenBounds.height;
+
+  let winPos = mainWindow.getPosition();
+  windowX = winPos[0] + 25;
+  windowY = winPos[1] + 25;
+
+  let winSize = mainWindow.getSize();
+  windowWidth = winSize[0] - 25;
+  windowHeight = winSize[1] - 25;
+  mainWindow.webContents.send('animation-tutorial');
+
+  // Window dimensions in screen bounds
+  viewX = Math.max(0, windowX);
+  viewY = Math.max(0, windowY);
+  viewWidth = Math.min( windowX + windowWidth, screenWidth ) - viewX;
+  viewHeight = Math.min( windowY + windowHeight, screenHeight ) - viewY;
+}
 
 const registerLockWindowShortcut = () => {
   globalShortcut.register('x', () => {
