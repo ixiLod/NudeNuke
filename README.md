@@ -45,9 +45,10 @@ This application use keyboard, there are 4 options keys :
 
 ## Installation
 
-**MacOS** : Just download the latest release, unzip, and put the app in your applications folder.<br>
+**MacOS** : Just download the latest release, unzip, and put the app in your applications folder, <br>then allow the app to Privacy & Security => Screen Recording.<br>
 ( You need to desactivate GateKeeper for use at this time, because this application is not licensed )
 
+**Windows** : Just launch the .exe for install, then your app is ready to use.
 <br>
 
 ## Dependencies
