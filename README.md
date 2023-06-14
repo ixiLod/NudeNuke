@@ -60,3 +60,9 @@ This application use keyboard, there are 4 options keys :
 [NSFWJS](https://github.com/infinitered/nsfwjs) : A simple JavaScript library to help you quickly identify unseemly images.<br>
 
 [Tensorflow.js](https://www.tensorflow.org/js) : Machine learning library for Javascript.<br>
+
+## Support 
+<img src="https://github.com/ixiLod/NudeNuke/assets/51421090/2273f1d9-7346-47b7-8aa2-2197db33488d" width="128">  
+
+You can support me by buying me a coffee => [here](https://www.buymeacoffee.com/vrh9ft859hx) <= 
+ Thank you for the support!
