@@ -24,8 +24,8 @@
   "author": "ixiLod",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs": "^4.7.0",
-    "@tensorflow/tfjs-node": "^4.7.0",
+    "@tensorflow/tfjs": "^3.18.0",
+    "@tensorflow/tfjs-node": "^3.18.0",
     "electron-squirrel-startup": "^1.0.0",
     "nsfwjs": "^2.4.2",
     "screenshot-desktop": "^1.14.0",
