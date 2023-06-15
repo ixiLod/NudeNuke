@@ -67,28 +67,32 @@ app.whenReady().then(() => {
 });
 
 const calcDimensions = (screen: Screen) => {
-  let screenBounds = screen.getPrimaryDisplay().bounds;
-  screenWidth = screenBounds.width;
-  screenHeight = screenBounds.height;
+  const winBounds = mainWindow.getBounds();
+  const currentScreen = screen.getDisplayNearestPoint({ x: winBounds.x, y: winBounds.y });
 
-  let winPos = mainWindow.getPosition();
-  windowX = winPos[0] + 25;
-  windowY = winPos[1] + 25;
+  const scaleFactor = currentScreen.scaleFactor;
 
-  let winSize = mainWindow.getSize();
-  windowWidth = winSize[0] - 25;
-  windowHeight = winSize[1] - 25;
+  screenWidth = currentScreen.bounds.width * scaleFactor;
+  screenHeight = currentScreen.bounds.height * scaleFactor;
+
+  windowX = winBounds.x * scaleFactor;
+  windowY = winBounds.y * scaleFactor;
+  windowWidth = winBounds.width * scaleFactor;
+  windowHeight = winBounds.height * scaleFactor;
 
   // Window dimensions in screen bounds
-  viewX = Math.max(0, windowX);
-  viewY = Math.max(0, windowY);
-  viewWidth = Math.min(windowX + windowWidth, screenWidth) - viewX;
-  viewHeight = Math.min(windowY + windowHeight, screenHeight) - viewY;
+  viewX = Math.max(0, windowX + 25);
+  viewY = Math.max(0, windowY + 25);
+  viewWidth = Math.max(0, Math.min(windowX + windowWidth - 25, screenWidth) - viewX);
+  viewHeight = Math.max(0, Math.min(windowY + windowHeight - 25, screenHeight) - viewY);
 };
 
 const isOutScreen = () => {
   const outScreen =
-    windowX <= 0 || windowX >= screenWidth || windowY <= 0 || windowY >= screenHeight;
+    windowX < 0 ||
+    windowX + windowWidth > screenWidth ||
+    windowY < 0 ||
+    windowY + windowHeight > screenHeight;
   if (outScreen) {
     mainWindow.webContents.send('out-screen');
   } else {

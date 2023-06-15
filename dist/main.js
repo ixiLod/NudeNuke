@@ -69,23 +69,26 @@ electron_1.app.whenReady().then(() => {
     });
 });
 const calcDimensions = (screen) => {
-    let screenBounds = screen.getPrimaryDisplay().bounds;
-    exports.screenWidth = screenBounds.width;
-    exports.screenHeight = screenBounds.height;
-    let winPos = exports.mainWindow.getPosition();
-    exports.windowX = winPos[0] + 25;
-    exports.windowY = winPos[1] + 25;
-    let winSize = exports.mainWindow.getSize();
-    exports.windowWidth = winSize[0] - 25;
-    exports.windowHeight = winSize[1] - 25;
+    const winBounds = exports.mainWindow.getBounds();
+    const currentScreen = screen.getDisplayNearestPoint({ x: winBounds.x, y: winBounds.y });
+    const scaleFactor = currentScreen.scaleFactor;
+    exports.screenWidth = currentScreen.bounds.width * scaleFactor;
+    exports.screenHeight = currentScreen.bounds.height * scaleFactor;
+    exports.windowX = winBounds.x * scaleFactor;
+    exports.windowY = winBounds.y * scaleFactor;
+    exports.windowWidth = winBounds.width * scaleFactor;
+    exports.windowHeight = winBounds.height * scaleFactor;
     // Window dimensions in screen bounds
-    exports.viewX = Math.max(0, exports.windowX);
-    exports.viewY = Math.max(0, exports.windowY);
-    exports.viewWidth = Math.min(exports.windowX + exports.windowWidth, exports.screenWidth) - exports.viewX;
-    exports.viewHeight = Math.min(exports.windowY + exports.windowHeight, exports.screenHeight) - exports.viewY;
+    exports.viewX = Math.max(0, exports.windowX + 25);
+    exports.viewY = Math.max(0, exports.windowY + 25);
+    exports.viewWidth = Math.max(0, Math.min(exports.windowX + exports.windowWidth - 25, exports.screenWidth) - exports.viewX);
+    exports.viewHeight = Math.max(0, Math.min(exports.windowY + exports.windowHeight - 25, exports.screenHeight) - exports.viewY);
 };
 const isOutScreen = () => {
-    const outScreen = exports.windowX <= 0 || exports.windowX >= exports.screenWidth || exports.windowY <= 0 || exports.windowY >= exports.screenHeight;
+    const outScreen = exports.windowX < 0 ||
+        exports.windowX + exports.windowWidth > exports.screenWidth ||
+        exports.windowY < 0 ||
+        exports.windowY + exports.windowHeight > exports.screenHeight;
     if (outScreen) {
         exports.mainWindow.webContents.send('out-screen');
     }
