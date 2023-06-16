@@ -14,7 +14,7 @@ let isRunning = false;
 let intervalId = null;
 let model: nsfw.NSFWJS;
 
-const DETECTION_INTERVAL_MS: number = 450;
+const DETECTION_INTERVAL_MS: number = 500;
 const NSFW_THRESHOLD: number = 0.65;
 
 async function loadModel(): Promise<nsfw.NSFWJS> {
