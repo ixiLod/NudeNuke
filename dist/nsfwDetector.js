@@ -35,13 +35,16 @@ const screenshot_desktop_1 = __importDefault(require("screenshot-desktop"));
 const sharp_1 = __importDefault(require("sharp"));
 let isRunning = false;
 let intervalId = null;
-let modelPromise;
+let model;
+const DETECTION_INTERVAL_MS = 450;
+const NSFW_THRESHOLD = 0.65;
 async function loadModel() {
-    const model = await nsfw.load();
+    if (model)
+        return model;
+    model = await nsfw.load();
     return model;
 }
-async function checkNSFW(modelPromise) {
-    const model = await modelPromise;
+async function checkNSFW() {
     const screenshotBuffer = await (0, screenshot_desktop_1.default)();
     const resizedBuffer = await (0, sharp_1.default)(screenshotBuffer)
         .extract({
@@ -52,30 +55,40 @@ async function checkNSFW(modelPromise) {
     })
         .resize(224, 224, { fit: 'contain' })
         .toBuffer();
-    const imageTensor = tf.node.decodeImage(resizedBuffer);
+    const imageTensor = tf.tidy(() => {
+        return tf.node.decodeImage(resizedBuffer, 3);
+    });
     const predictions = await model.classify(imageTensor);
-    imageTensor.dispose();
     const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
-    const threshold = 0.67; // Adjustable value
-    return nsfwScore !== undefined && nsfwScore >= threshold;
+    imageTensor.dispose();
+    return nsfwScore !== undefined && nsfwScore >= NSFW_THRESHOLD;
 }
 function startDetection(mainWindow) {
-    modelPromise = loadModel();
+    loadModel().catch((error) => {
+        console.error(`Error loading the model: ${error}`);
+    });
     mainWindow.on('focus', () => {
-        electron_1.globalShortcut.register('Space', () => {
+        electron_1.globalShortcut.register('Space', async () => {
             isRunning = !isRunning;
             mainWindow.webContents.send('toggle-border');
             if (isRunning) {
                 intervalId = setInterval(async () => {
-                    const isNSFW = await checkNSFW(modelPromise);
-                    if (isNSFW) {
-                        console.log('NSFW content detected!');
-                        mainWindow.webContents.send('auto-blur');
+                    try {
+                        const isNSFW = await checkNSFW();
+                        if (isNSFW) {
+                            console.log('NSFW content detected!');
+                            mainWindow.webContents.send('auto-blur');
+                        }
+                        else {
+                            console.log('SFW content detected.');
+                        }
                     }
-                    else {
-                        console.log('SFW content detected.');
+                    catch (err) {
+                        console.error(`Error while checking for NSFW content: ${err}`);
+                        clearInterval(intervalId);
+                        intervalId = null;
                     }
-                }, 550);
+                }, DETECTION_INTERVAL_MS);
             }
             else if (intervalId) {
                 clearInterval(intervalId);

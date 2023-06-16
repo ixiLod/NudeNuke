@@ -33,7 +33,7 @@ const autoBlur = () => {
       borderBlur.classList.remove('active-style-border-blur');
       autoBlurRunning = false;
     }
-  }, 9000);
+  }, 7000);
 };
 
 const outScreen = () => {
