@@ -41,10 +41,11 @@ async function checkNSFW(): Promise<boolean> {
   });
 
   const predictions: Prediction[] = await model.classify(imageTensor);
-
-  const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
-
   imageTensor.dispose();
+
+  const nsfwScore: number | undefined = predictions.find(
+    (prediction) => prediction.className === 'Porn'
+  )?.probability;
 
   return nsfwScore !== undefined && nsfwScore >= NSFW_THRESHOLD;
 }

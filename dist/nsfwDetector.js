@@ -36,7 +36,7 @@ const sharp_1 = __importDefault(require("sharp"));
 let isRunning = false;
 let intervalId = null;
 let model;
-const DETECTION_INTERVAL_MS = 450;
+const DETECTION_INTERVAL_MS = 500;
 const NSFW_THRESHOLD = 0.65;
 async function loadModel() {
     if (model)
@@ -59,8 +59,8 @@ async function checkNSFW() {
         return tf.node.decodeImage(resizedBuffer, 3);
     });
     const predictions = await model.classify(imageTensor);
-    const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
     imageTensor.dispose();
+    const nsfwScore = predictions.find((prediction) => prediction.className === 'Porn')?.probability;
     return nsfwScore !== undefined && nsfwScore >= NSFW_THRESHOLD;
 }
 function startDetection(mainWindow) {

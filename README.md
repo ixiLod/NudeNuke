@@ -16,6 +16,9 @@
 <p align="center">
   <img src="static/assets/tutogifanim.gif" alt="tutoGif">
 </p>
+<p align="center">*<em></li>For the moment this demo does not represent reality, the auto mode is in beta, it is therefore the manual mode which is used here</em>*
+</p>
+
 
 <br>
 
@@ -62,8 +65,8 @@ This application use keyboard, there are 4 options keys :
 [Tensorflow.js](https://www.tensorflow.org/js) : Machine learning library for Javascript.<br>
 <br>
 
-## Support 
-<img src="https://github.com/ixiLod/NudeNuke/assets/51421090/2273f1d9-7346-47b7-8aa2-2197db33488d" width="128">  
+## Support
+<img src="https://github.com/ixiLod/NudeNuke/assets/51421090/2273f1d9-7346-47b7-8aa2-2197db33488d" width="128">
 
-You can support me by buying me a coffee => [here](https://www.buymeacoffee.com/vrh9ft859hx) <= 
+You can support me by buying me a coffee => [here](https://www.buymeacoffee.com/vrh9ft859hx) <=
  Thank you for the support!

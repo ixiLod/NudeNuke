@@ -26,7 +26,7 @@ const createWindow = (): void => {
     height: 700,
     transparent: true,
     frame: false,
-    icon: path.join(__dirname, '../static/icons/icon.icns'),
+    icon: path.join(__dirname, '../static/icons/icon.ico'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,
