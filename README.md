@@ -48,10 +48,10 @@ This application use keyboard, there are 4 options keys :
 
 ## Installation
 
-**MacOS** : Just download the latest release, unzip, and put the app in your applications folder, <br>then allow the app to Privacy & Security => Screen Recording.<br>
+**MacOS** : Just download the latest release => [NudeNuke.app](https://github.com/ixiLod/NudeNuke/releases/download/v0.1.3/NudeNuke-darwin-arm64-0.1.3.zip), unzip, and put the app in your applications folder, <br>then allow the app to Privacy & Security => Screen Recording.<br>
 ( You need to desactivate GateKeeper for use at this time, because this application is not licensed )
 
-**Windows** : Just launch the .exe for install, then your app is ready to use.
+**Windows** : Just download the latest release =>[NudeNuke.exe](https://github.com/ixiLod/NudeNuke/releases/download/v0.1.3/NudeNuke-0.1.3.Setup.exe), launch the .exe for install, then your app is ready to use.
 <br><br>
 
 ## Dependencies
