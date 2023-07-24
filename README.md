@@ -16,7 +16,7 @@
 <p align="center">
   <img src="static/assets/tutogifanim.gif" alt="tutoGif">
 </p>
-<p align="center">*<em></li>For the moment this demo does not represent reality, the auto mode is in beta, it is therefore the manual mode which is used here</em>*
+<p align="center">*<em>For the purposes of the demo here, the manual filter is used, the auto filter only detects naked or explicit content</em>*
 </p>
 
 
